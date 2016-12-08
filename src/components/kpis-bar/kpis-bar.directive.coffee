@@ -5,6 +5,7 @@ angular
       restrict: 'E'
       scope: {
         kpis: '='
+        onChangeCb: '&?onChange'
       }
       template: $templateCache.get('kpis-bar/kpis-bar.tmpl.html')
 
@@ -127,9 +128,10 @@ angular
           if (kpiIsEditing() && !$scope.showEditMode)
             ImpacEvents.notifyCallbacks(IMPAC_EVENTS.kpisBarUpdateSettings)
           else
+            console.log($scope.showEditMode)
             ImpacEvents.notifyCallbacks(IMPAC_EVENTS.kpisBarUpdateSettings, f) if (f = $scope.showEditMode)
             $scope.showEditMode = !$scope.showEditMode
-          $scope.availableKpis.toggle() unless $scope.availableKpis.hide || $scope.showEditMode
+          $scope.availableKpis.toggle() console.log('4') unless $scope.availableKpis.hide || $scope.showEditMode
           # prevents spam clicking, and works with kpi show/edit annimation.
           $timeout(->
             $scope.toggleEditModeLock = false
@@ -145,6 +147,14 @@ angular
           ImpacDashboardsSvc.update(dashboard.id, { metadata: dashboard.metadata }).then(->
             ImpacEvents.notifyCallbacks(IMPAC_EVENTS.kpisBarUpdateDates)
           )
+  
+        $scope.onChange = ->
+          # scope.onChangeCb()(buildDates()) if scope.onChangeCb()
+          # scope.showApplyButton()
+          # scope.onChangeCb()(buildDates()) if scope.onChangeCb()
+
+        $scope.toggletesting = ->
+          console.log('aalksaklasksalskaldjdjskdjakhdaldsadhdkasdakshdkdhsdh')
 
         $scope.toggleShowContent = ->
           $scope.showContent = !$scope.showContent
